@@ -16,7 +16,7 @@ pipeline {
                 //sh "mvn -Dmaven.test.failure.ignore=true clean package"
 
                 // To run Maven on a Windows agent, use
-                 bat "-Dmaven.test.failure.ignore=true clean package"
+                bat "mvn -Dmaven.test.failure.ignore=true clean package"
             }
 
             post {
@@ -28,21 +28,10 @@ pipeline {
                 }
             }
         }
-         stage('test'){
-            steps{
-                bat "pom.xml test"
-            }
-        }
-        stage('acceptance'){
-            steps{
-                input('Do you want to proceed?')
-            }
-        }
         stage('deploy'){
             steps{
                 echo "Deploy into tomcat"
-                build 'deploy-war-from-jenkins-to-tomcat'
             }
         }
-    }
+}
 }
